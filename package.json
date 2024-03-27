@@ -1,0 +1,12 @@
+{
+  "name": "node-module-import",
+  "version": "1.0.0",
+  "description": "✨ woori node module auto import",
+  "author": "PIYoung(https://github.com/PIYoung)",
+  "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {}
+}
