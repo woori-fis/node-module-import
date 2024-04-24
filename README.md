@@ -21,7 +21,8 @@ npm run start
 
 프로젝트 루트 경로에 생성된 tarballs 폴더를 확인합니다.
 
-<font color="red">주의사항</font>
+$\color{red}주의사항$
+
 이전에 작업한 이력은 반드시 삭제하고, Git에 반영하지 않습니다.
 
 1. package.json의 dependencies 비워두기
