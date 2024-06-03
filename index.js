@@ -47,25 +47,38 @@ if (!existsSync(tarballDirectory)) {
   mkdirSync(tarballDirectory);
 }
 
-tarballs.forEach((tarball) => {
-  const splited = tarball.filename.split("/");
-  const filename = splited.pop();
-  const dir = tarballDirectory + "/" + splited.join("/");
-  if (!existsSync(dir)) {
-    mkdirSync(dir, { recursive: true });
+const start = async () => {
+  for (const tarball of tarballs) {
+    const splited = tarball.filename.split("/");
+    const filename = splited.pop();
+    const dir = tarballDirectory + "/" + splited.join("/");
+    if (!existsSync(dir)) {
+      mkdirSync(dir, { recursive: true });
+    }
+
+    const result = await download(
+      tarball.url,
+      tarballDirectory + "/" + tarball.filename,
+    );
+    console.log(`Done ${result}`);
   }
-  download(tarball.url, tarballDirectory + "/" + tarball.filename);
-});
+};
 
 function download(url, dest, cb) {
-  const file = createWriteStream(dest);
-  https.get(url, function (response) {
-    response.pipe(file);
-    file.on("finish", function () {
-      file.close(cb);
-    });
-    file.on("error", function (err) {
-      console.log(err);
+  return new Promise((resolve, reject) => {
+    const file = createWriteStream(dest);
+    https.get(url, function (response) {
+      response.pipe(file);
+      file.on("finish", function () {
+        file.close(cb);
+        resolve(dest);
+      });
+      file.on("error", function (err) {
+        console.log(err);
+        reject(err);
+      });
     });
   });
 }
+
+start();
